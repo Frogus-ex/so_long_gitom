@@ -1,10 +1,17 @@
 NAME = so_long
 
-SRC  = main.c 
+SRC  = main.c \
+		GNL/get_next_line.c \
+		GNL/get_next_line_utils.c \
+		key_handle.c \
+		draw.c \
+		parce_map.c \
+		utils.c \
+
 
 OBJ  = $(SRC:.c=.o)
 
-CFLAGS = -Wall -Wextra -Werror -I./minilibx-linux 
+CFLAGS = -Wall -Wextra -Werror -I./minilibx-linux -I./GNL
 
 LDFLAGS = -L./minilibx-linux -lmlx -lX11 -lXext -lm
 
