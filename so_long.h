@@ -15,9 +15,18 @@
 #define DOWN 65364
 #define LEFT 65361
 #define RIGHT 65363
+#define A 97
+#define S 115
+#define D 100
+#define W 119
+
+#define MOVE_FRONT 1
+#define MOVE_LEFT 2
+#define MOVE_RIGHT 3
+#define MOVE_BACK 4
 
 #define IMG_PXL 50
-#define TILE_SIZE 100
+#define TILE_SIZE 75
 #define WND_NAME "so_long"
 
 #define WALL '1'
@@ -35,9 +44,8 @@ typedef enum e_bool
 typedef struct s_player {
 	int	y;
 	int	x;
+	int	moves;
 }				t_player;
-
-
 
 typedef struct	s_cnt {
 	int		count_p;
@@ -47,17 +55,20 @@ typedef struct	s_cnt {
 	t_player	player;
 }				t_cnt;
 
+struct s_img;
+
 typedef struct	s_game {
 	void		*mlx;
 	void		*win;
 	char		*path;
 	int			width;
 	int			height;
+	int			player_sprite;
 	char		**map;
-// t_img		*img;
 	t_player	player;
 	t_cnt		content;
 	t_bool		map_alloc;
+	struct s_img	*img;
 }				t_game;
 
 typedef struct	s_img {
@@ -69,12 +80,11 @@ typedef struct	s_img {
 	t_game	*game;
 }				t_img;
 
+
 void 	draw_background(t_img *img, int width, int height);
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
 int		key_press(int keycode, t_game *game);
 int		cross_close(t_game *game);
-int		mouse_enter(void);
-int		mouse_leave(void);
 void	ft_check_map(t_game *game);
 void	col_check(t_game *game);
 void	line_check(t_game *game);
@@ -87,6 +97,7 @@ char	*ft_strnstr(const char *big, const char *little, size_t len);
 char	*ft_strrchr(const char *s, int c);
 void	draw_tiles(t_img *img, int x, int y, int color);
 void	draw_map(t_img *img);
-
+void	player_moves(t_img *img, int new_y, int new_x, int player_sprite);
+int		player_input(int keycode, t_img *img);
 
 #endif

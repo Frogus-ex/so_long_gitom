@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 11:02:02 by tlorette          #+#    #+#             */
-/*   Updated: 2025/06/27 17:48:45 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/06/29 17:05:22 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,10 @@ void	draw_map(t_img *img)
 			x++;
 		}
 		y++;
+	}
+	if (y == x)
+	{
+		printf("Erreur\n Map carre !!\n");
+		exit (0);
 	}
 }

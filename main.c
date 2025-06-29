@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:03:28 by tlorette          #+#    #+#             */
-/*   Updated: 2025/06/27 17:45:40 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/06/29 17:10:02 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,28 +26,29 @@ int	main(int ac, char **av)
 	
 	ligne = 0;
 	colonne = 0;
-	width = 1300;
-	height = 1300;
 	game = malloc(sizeof(t_game));
 	img.game = game;
+	game->img = &img;
 	if (!game)
-		exit(EXIT_FAILURE);
+	exit(EXIT_FAILURE);
 	game->path = av[1];
 	check_arg_param(ac, av, game);
 	read_map(game, av[1]);
 	ft_check_map(game);
+	width = TILE_SIZE * game->width;
+	height = TILE_SIZE * game->height;
 	game->mlx = mlx_init();
 	game->win = mlx_new_window(game->mlx, width, height, WND_NAME);
 	img.img = mlx_new_image(game->mlx, width, height);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
 		&img.endian);
-
-
+		
 	draw_background(&img, width, height);
 	draw_map(&img);
 	mlx_put_image_to_window(game->mlx, game->win, img.img, 0, 0);
 	if (!mlx_key_hook(game->win, key_press, game))
 		return (0);
+	mlx_hook(game->win, 2, 1L << 0, player_input, &img);
 	mlx_hook(game->win, 17, 0, cross_close, game);
 	mlx_loop(game->mlx);
 	return (0);

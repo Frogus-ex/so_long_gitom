@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 14:12:56 by tlorette          #+#    #+#             */
-/*   Updated: 2025/06/27 14:43:27 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/06/29 12:19:54 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	col_check(t_game *game)
 	{
 		if (game->map[i][0] != WALL)
 			ft_printf("map invalide car pas close\n");
-		else if (game->map[i][game->width - 1] != WALL)
+		if (game->map[i][game->width - 1] != WALL)
 			ft_printf("map invalide car pas close\n");
 		i++;
 	}
@@ -53,7 +53,7 @@ void	line_check(t_game *game)
 	{
 		if (game->map[0][i] != WALL)
 			ft_printf("map invalide car pas close\n");
-		else if (game->map[game->height - 1][i] != WALL)
+		if (game->map[game->height - 1][i] != WALL)
 			ft_printf("map invalide car pas close\n");
 		i++;
 	}
@@ -77,8 +77,8 @@ void	check_param(t_game *game)
 			else if (tile == PLAYER)
 			{
 				game->content.count_p++;
-				game->content.player.x = x;
-				game->content.player.y = y;
+				game->player.x = x;
+				game->player.y = y;
 			}
 			else if (tile == COLLECT)
 			{

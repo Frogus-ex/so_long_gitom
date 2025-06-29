@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 13:22:37 by tlorette          #+#    #+#             */
-/*   Updated: 2025/06/27 17:03:04 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/06/29 16:18:41 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	read_map(t_game *game, char *av)
 	game->width = ft_gnlen(line);
 	while (line)
 	{
-		ft_printf("%s", line);
+		// ft_printf("%s", line);
 		game->height++;
 		free(line);
 		line = get_next_line(fd);
@@ -84,8 +84,7 @@ int	read_map(t_game *game, char *av)
 		line = get_next_line(fd);
 		i++;
 	}
-	game->map[i] = NULL;
 	close(fd);
-	ft_printf("\n%d\n%d", game->width, game->height);
+	// ft_printf("\n%d\n%d", game->width, game->height);
 	return (0);
 }
