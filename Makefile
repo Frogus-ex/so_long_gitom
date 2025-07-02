@@ -1,3 +1,5 @@
+.SILENT:
+
 NAME = so_long
 
 SRC  = main.c \
@@ -15,10 +17,7 @@ SRC  = main.c \
 		printf/ft_puthex_min.c \
 		printf/ft_putnbr.c \
 		printf/ft_putstr.c \
-		printf/ft_unsigned.c \
-
-
-
+		printf/ft_unsigned.c
 
 OBJ  = $(SRC:.c=.o)
 
@@ -30,12 +29,15 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	cc $(OBJ) $(CFLAGS) $(LDFLAGS) -o $(NAME)
+	@echo "$(NAME) created"
 
 clean:
 	rm -f $(OBJ)
+	@echo "All objects files deleted"
 
 fclean: clean
 	rm -f $(NAME)
+	@echo "All objects files & library deleted"
 
 re: fclean all
 

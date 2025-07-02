@@ -6,30 +6,27 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 14:12:56 by tlorette          #+#    #+#             */
-/*   Updated: 2025/06/29 12:19:54 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/07/02 18:41:36 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include<fcntl.h>
-#include<stdio.h>
 #include "so_long.h"
-#include "GNL/get_next_line.h"
 
-void	col_check(t_game *game);
-void	line_check(t_game *game);
+void	map_check(t_game *game);
 void	check_param(t_game *game);
 void	ft_verify_param(t_game *game);
 
-void ft_check_map(t_game *game)
+void	ft_check_map(t_game *game)
 {
-	col_check(game);
-	line_check(game);
+	game->content.count_c = 0;
+	game->content.count_e = 0;
+	game->content.count_p = 0;
+	map_check(game);
 	check_param(game);
 	ft_verify_param(game);
 }
 
-
-void	col_check(t_game *game)
+void	map_check(t_game *game)
 {
 	int	i;
 
@@ -37,33 +34,42 @@ void	col_check(t_game *game)
 	while (i < game->height)
 	{
 		if (game->map[i][0] != WALL)
-			ft_printf("map invalide car pas close\n");
+			ft_error(game, "map invalide car pas close\n");
 		if (game->map[i][game->width - 1] != WALL)
-			ft_printf("map invalide car pas close\n");
+			ft_error(game, "map invalide car pas close\n");
+		i++;
+	}
+	i = 0;
+	while (i < game->width)
+	{
+		if (game->map[0][i] != WALL)
+			ft_error(game, "map invalide car pas close\n");
+		if (game->map[game->height - 1][i] != WALL)
+			ft_error(game, "map invalide car pas close\n");
 		i++;
 	}
 }
 
-void	line_check(t_game *game)
+static void	check_tile(t_game *game, char tile, int x, int y)
 {
-	int	i;
-
-	i = 0;
-	while(i < game->width)
+	if (!ft_strchr("CEP01", tile))
+		ft_error(game, "invalid map params\n");
+	else if (tile == PLAYER)
 	{
-		if (game->map[0][i] != WALL)
-			ft_printf("map invalide car pas close\n");
-		if (game->map[game->height - 1][i] != WALL)
-			ft_printf("map invalide car pas close\n");
-		i++;
+		game->content.count_p++;
+		game->player.x = x;
+		game->player.y = y;
 	}
+	else if (tile == COLLECT)
+		game->content.count_c++;
+	else if (tile == EXIT)
+		game->content.count_e++;
 }
 
 void	check_param(t_game *game)
 {
-	int	y;
-	int	x;
-	char	tile;
+	int		y;
+	int		x;
 
 	y = 0;
 	while (y < game->height)
@@ -71,21 +77,7 @@ void	check_param(t_game *game)
 		x = 0;
 		while (x < game->width)
 		{
-			tile = game->map[y][x];
-			if (!ft_strchr("CEP01", tile))
-				ft_printf("invalid map params\n");
-			else if (tile == PLAYER)
-			{
-				game->content.count_p++;
-				game->player.x = x;
-				game->player.y = y;
-			}
-			else if (tile == COLLECT)
-			{
-				game->content.count_c++;
-			}
-			else if (tile == EXIT)
-				game->content.count_e++;
+			check_tile(game, game->map[y][x], x, y);
 			x++;
 		}
 		y++;
@@ -95,9 +87,9 @@ void	check_param(t_game *game)
 void	ft_verify_param(t_game *game)
 {
 	if (game->content.count_c == 0)
-		ft_printf("invalid map no coins\n");		
+		ft_error(game, "invalid map no coins\n");
 	else if (game->content.count_e == 0)
-		ft_printf("invalid map no exit\n");
+		ft_error(game, "invalid map no exit\n");
 	else if (game->content.count_p != 1)
-		ft_printf("invalid map invalid player number\n");
+		ft_error(game, "invalid map invalid player number\n");
 }
