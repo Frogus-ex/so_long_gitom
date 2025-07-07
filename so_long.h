@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 10:38:08 by tlorette          #+#    #+#             */
-/*   Updated: 2025/07/03 11:04:51 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/07/07 17:26:35 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdlib.h>
 # include <math.h>
 # include <stdio.h>
+# include "libft/libft.h"
 # include "GNL/get_next_line.h"
 # include "printf/ft_printf.h"
 
@@ -68,6 +69,9 @@ typedef struct s_game{
 	void			*mlx;
 	void			*win;
 	char			*path;
+	char			*line;
+	int				len;
+	int				fd;
 	int				width;
 	int				height;
 	int				player_sprite;

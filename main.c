@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:03:28 by tlorette          #+#    #+#             */
-/*   Updated: 2025/07/03 14:27:30 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/07/07 17:06:17 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int	main(int ac, char **av)
 	img.width = TILE_SIZE * game->width;
 	img.height = TILE_SIZE * game->height;
 	game->mlx = mlx_init();
+	if (!game->mlx)
+		ft_error(game, "mlx_init failed");
 	mlx_get_screen_size(game->mlx, &screen_width, &screen_height);
 	if (img.width > screen_width || img.height > screen_height)
 		ft_error(game, "map trop grande");

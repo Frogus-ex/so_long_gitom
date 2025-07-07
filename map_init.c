@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 13:22:37 by tlorette          #+#    #+#             */
-/*   Updated: 2025/07/07 11:37:33 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/07/07 17:27:08 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,55 +39,59 @@ int	ft_gnlen(char *gnl)
 
 static int	count_lines(t_game *game, char *av)
 {
-	int		fd;
-	int		len;
-	char	*line;
+	char	*stash;
 
-	fd = open(av, O_RDONLY);
-	if (fd < 0)
+	stash = NULL;
+	game->fd = open(av, O_RDONLY);
+	if (game->fd < 0)
 		return (1);
 	game->height = 0;
-	line = get_next_line(fd);
-	if (!line)
-		return (free(line), close(fd), 1);
-	game->width = ft_gnlen(line);
-	while (line)
+	game->line = get_next_line(game->fd, &stash);
+	if (!game->line)
+		return (free(game->line), close(game->fd), 1);
+	game->width = ft_gnlen(game->line);
+	while (game->line)
 	{
-		len = ft_gnlen(line);
-		if (len != game->width)
-			ft_error(game, "map pas rectangulaire");
+		game->len = ft_gnlen(game->line);
+		if (game->len == 0 || game->width == 0 || game->len != game->width)
+		{
+			free(game->line);
+			free(stash);
+			ft_error(game, "map au format non valide");
+		}
 		game->height++;
-		free(line);
-		line = get_next_line(fd);
+		free(game->line);
+		game->line = get_next_line(game->fd, &stash);
 	}
-	return (close(fd), 0);
+	return (close(game->fd), 0);
 }
 
 static int	fill_map(t_game *game, char *av)
 {
-	int		fd;
 	int		i;
-	char	*line;
+	char	*stash;
 
+	stash = NULL;
 	game->map = malloc(sizeof(char *) * (game->height + 1));
 	if (!game->map)
 		return (1);
-	fd = open(av, O_RDONLY);
-	if (fd < 0)
+	game->fd = open(av, O_RDONLY);
+	if (game->fd < 0)
 		return (free(game->map), 1);
 	i = 0;
-	line = get_next_line(fd);
-	while (line && i < game->height)
+	game->line = get_next_line(game->fd, &stash);
+	while (game->line && i < game->height)
 	{
-		game->map[i] = ft_strdup(line);
-		free(line);
+		game->map[i] = ft_strdup(game->line);
 		if (!game->map[i])
-			return (free_map(game->map), close(fd), 1);
-		line = get_next_line(fd);
+			return (free(game->line), free_map(game->map), close(game->fd), 1);
+		free(game->line);
+		game->line = get_next_line(game->fd, &stash);
 		i++;
 	}
+	free(game->line);
 	game->map[i] = NULL;
-	return (close(fd), 0);
+	return (close(game->fd), 0);
 }
 
 int	read_map(t_game *game, char *av)
