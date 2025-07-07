@@ -6,18 +6,16 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 13:22:37 by tlorette          #+#    #+#             */
-/*   Updated: 2025/07/02 19:11:08 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/07/07 11:37:33 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include<stdio.h>
 #include "so_long.h"
 
 void	check_arg_param(int ac, char **av, t_game *game)
 {
 	int	map_param_len;
 
-	game->map_alloc = false;
 	if (ac > 2)
 		ft_error(game, "Too many arg\n");
 	if (ac < 2)
@@ -42,6 +40,7 @@ int	ft_gnlen(char *gnl)
 static int	count_lines(t_game *game, char *av)
 {
 	int		fd;
+	int		len;
 	char	*line;
 
 	fd = open(av, O_RDONLY);
@@ -50,14 +49,13 @@ static int	count_lines(t_game *game, char *av)
 	game->height = 0;
 	line = get_next_line(fd);
 	if (!line)
-	{
-		free(line);
-		close(fd);
-		return (1);
-	}
+		return (free(line), close(fd), 1);
 	game->width = ft_gnlen(line);
 	while (line)
 	{
+		len = ft_gnlen(line);
+		if (len != game->width)
+			ft_error(game, "map pas rectangulaire");
 		game->height++;
 		free(line);
 		line = get_next_line(fd);
@@ -73,7 +71,7 @@ static int	fill_map(t_game *game, char *av)
 
 	game->map = malloc(sizeof(char *) * (game->height + 1));
 	if (!game->map)
-		return (free(game->map), 1);
+		return (1);
 	fd = open(av, O_RDONLY);
 	if (fd < 0)
 		return (free(game->map), 1);
@@ -81,14 +79,15 @@ static int	fill_map(t_game *game, char *av)
 	line = get_next_line(fd);
 	while (line && i < game->height)
 	{
-		game->map[i] = line;
+		game->map[i] = ft_strdup(line);
 		free(line);
+		if (!game->map[i])
+			return (free_map(game->map), close(fd), 1);
 		line = get_next_line(fd);
 		i++;
 	}
-	free(game->map);
-	close(fd);
-	return (0);
+	game->map[i] = NULL;
+	return (close(fd), 0);
 }
 
 int	read_map(t_game *game, char *av)

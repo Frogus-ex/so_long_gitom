@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 10:38:08 by tlorette          #+#    #+#             */
-/*   Updated: 2025/07/02 18:38:13 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/07/03 11:04:51 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,6 @@
 # define PLAYER 'P'
 # define EXIT 'E'
 
-typedef enum e_bool
-{
-	false,
-	true
-}	t_bool;
-
 typedef struct s_player {
 	int	y;
 	int	x;
@@ -80,7 +74,6 @@ typedef struct s_game{
 	char			**map;
 	t_player		player;
 	t_cnt			content;
-	t_bool			map_alloc;
 	struct s_img	*img;
 }				t_game;
 
@@ -95,7 +88,7 @@ typedef struct s_img {
 	t_game	*game;
 }				t_img;
 
-void	cleanup(t_game *game);
+int		cleanup(t_game *game);
 void	ft_victory(t_img *img);
 void	ft_error(t_game *game, char *str);
 void	draw_background(t_img *img, int width, int height);
@@ -115,4 +108,5 @@ void	draw_tiles(t_img *img, int x, int y, int color);
 void	draw_map(t_img *img);
 void	player_moves(t_img *img, int new_y, int new_x);
 int		player_input(int keycode, t_img *img);
+void	free_map(char **map);
 #endif

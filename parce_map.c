@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 14:12:56 by tlorette          #+#    #+#             */
-/*   Updated: 2025/07/02 18:41:36 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/07/07 11:26:19 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,25 +28,26 @@ void	ft_check_map(t_game *game)
 
 void	map_check(t_game *game)
 {
-	int	i;
+	int	y;
+	int	x;
 
-	i = 0;
-	while (i < game->height)
+	y = 0;
+	while (y < game->height)
 	{
-		if (game->map[i][0] != WALL)
+		if (game->map[y][0] != WALL)
 			ft_error(game, "map invalide car pas close\n");
-		if (game->map[i][game->width - 1] != WALL)
+		if (game->map[y][game->width - 1] != WALL)
 			ft_error(game, "map invalide car pas close\n");
-		i++;
+		y++;
 	}
-	i = 0;
-	while (i < game->width)
+	x = 0;
+	while (x < game->width)
 	{
-		if (game->map[0][i] != WALL)
+		if (game->map[0][x] != WALL)
 			ft_error(game, "map invalide car pas close\n");
-		if (game->map[game->height - 1][i] != WALL)
+		if (game->map[game->height - 1][x] != WALL)
 			ft_error(game, "map invalide car pas close\n");
-		i++;
+		x++;
 	}
 }
 
@@ -88,8 +89,8 @@ void	ft_verify_param(t_game *game)
 {
 	if (game->content.count_c == 0)
 		ft_error(game, "invalid map no coins\n");
-	else if (game->content.count_e == 0)
-		ft_error(game, "invalid map no exit\n");
+	else if (game->content.count_e != 1)
+		ft_error(game, "invalid exit number\n");
 	else if (game->content.count_p != 1)
 		ft_error(game, "invalid map invalid player number\n");
 }

@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:03:28 by tlorette          #+#    #+#             */
-/*   Updated: 2025/07/02 19:06:55 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/07/03 14:27:30 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int ac, char **av)
 	t_img	img;
 	t_game	*game;
 
-	game = malloc(sizeof(t_game));
+	game = ft_calloc(1, sizeof(t_game));
 	if (!game)
 		cleanup(game);
 	img.game = game;
