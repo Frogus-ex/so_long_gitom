@@ -21,7 +21,8 @@ SRC  = main.c \
 		printf/ft_putnbr.c \
 		printf/ft_putstr.c \
 		printf/ft_unsigned.c \
-		cleaner.c
+		cleaner.c \
+		flood_fill.c
 
 OBJ  = $(SRC:.c=.o)
 

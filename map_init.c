@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 13:22:37 by tlorette          #+#    #+#             */
-/*   Updated: 2025/07/07 17:27:08 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/07/08 16:18:17 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,19 @@
 
 void	check_arg_param(int ac, char **av, t_game *game)
 {
-	int	map_param_len;
+	int		len;
+	char	*name;
 
 	if (ac > 2)
-		ft_error(game, "Too many arg\n");
+		ft_error(game, "Too many arguments");
 	if (ac < 2)
-		ft_error(game, "map arg missing\n");
-	map_param_len = ft_strlen(av[1]);
-	if (!ft_strnstr(&av[1][map_param_len - 4], ".ber", 4))
-		ft_error(game, "map file extention must be .ber\n");
+		ft_error(game, "Missing map argument");
+	name = av[1];
+	len = ft_strlen(name);
+	if (len < 5 || ft_strncmp(name + len - 4, ".ber", 4) != 0)
+		ft_error(game, "Map file extension must be .ber");
+	if (ft_strnstr(name, ".ber", len - 4))
+		ft_error(game, "Map filename must not contain multiple .ber");
 }
 
 int	ft_gnlen(char *gnl)
@@ -44,7 +48,7 @@ static int	count_lines(t_game *game, char *av)
 	stash = NULL;
 	game->fd = open(av, O_RDONLY);
 	if (game->fd < 0)
-		return (1);
+		return (ft_error(game, "Map inexistante"), 1);
 	game->height = 0;
 	game->line = get_next_line(game->fd, &stash);
 	if (!game->line)
@@ -57,7 +61,7 @@ static int	count_lines(t_game *game, char *av)
 		{
 			free(game->line);
 			free(stash);
-			ft_error(game, "map au format non valide");
+			ft_error(game, "la map n est pas rectangualaire");
 		}
 		game->height++;
 		free(game->line);
@@ -77,7 +81,7 @@ static int	fill_map(t_game *game, char *av)
 		return (1);
 	game->fd = open(av, O_RDONLY);
 	if (game->fd < 0)
-		return (free(game->map), 1);
+		ft_error(game, "map inexistante");
 	i = 0;
 	game->line = get_next_line(game->fd, &stash);
 	while (game->line && i < game->height)

@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 18:08:36 by tlorette          #+#    #+#             */
-/*   Updated: 2025/07/07 14:18:02 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/07/08 18:40:49 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	cleanup(t_game *game)
 
 void	ft_victory(t_img *img)
 {
-	ft_printf("GG TU ES TROP FORT A LE JEU VIDEO !!!");
+	ft_printf("GG TU ES TROP FORT A LE JEU VIDEO !!!\n");
 	cleanup(img->game);
 }
 

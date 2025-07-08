@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 11:02:02 by tlorette          #+#    #+#             */
-/*   Updated: 2025/07/07 11:14:51 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/07/08 14:33:23 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,5 @@ void	draw_map(t_img *img)
 		y++;
 	}
 	if (y == x)
-		ft_error(img->game, "Map carre !!\n");
+		ft_error(img->game, "Map carre !!");
 }

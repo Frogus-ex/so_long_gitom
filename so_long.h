@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 10:38:08 by tlorette          #+#    #+#             */
-/*   Updated: 2025/07/07 17:26:35 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/07/08 18:33:43 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_cnt {
 	int			count_p;
 	int			count_e;
 	int			count_c;
+	int			count_f;
 	int			tiles;
 	t_player	player;
 }				t_cnt;
@@ -68,7 +69,6 @@ struct	s_img;
 typedef struct s_game{
 	void			*mlx;
 	void			*win;
-	char			*path;
 	char			*line;
 	int				len;
 	int				fd;
@@ -113,4 +113,6 @@ void	draw_map(t_img *img);
 void	player_moves(t_img *img, int new_y, int new_x);
 int		player_input(int keycode, t_img *img);
 void	free_map(char **map);
+void	flood_fill(t_game *game);
+
 #endif

@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 14:12:56 by tlorette          #+#    #+#             */
-/*   Updated: 2025/07/07 11:26:19 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/07/08 14:38:17 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,26 +35,26 @@ void	map_check(t_game *game)
 	while (y < game->height)
 	{
 		if (game->map[y][0] != WALL)
-			ft_error(game, "map invalide car pas close\n");
+			ft_error(game, "map invalide car pas close");
 		if (game->map[y][game->width - 1] != WALL)
-			ft_error(game, "map invalide car pas close\n");
+			ft_error(game, "map invalide car pas close");
 		y++;
 	}
 	x = 0;
 	while (x < game->width)
 	{
 		if (game->map[0][x] != WALL)
-			ft_error(game, "map invalide car pas close\n");
+			ft_error(game, "map invalide car pas close");
 		if (game->map[game->height - 1][x] != WALL)
-			ft_error(game, "map invalide car pas close\n");
+			ft_error(game, "map invalide car pas close");
 		x++;
 	}
 }
 
 static void	check_tile(t_game *game, char tile, int x, int y)
 {
-	if (!ft_strchr("CEP01", tile))
-		ft_error(game, "invalid map params\n");
+	if (!ft_strchr("CEP10", tile))
+		ft_error(game, "invalid map params");
 	else if (tile == PLAYER)
 	{
 		game->content.count_p++;
@@ -65,6 +65,8 @@ static void	check_tile(t_game *game, char tile, int x, int y)
 		game->content.count_c++;
 	else if (tile == EXIT)
 		game->content.count_e++;
+	else if (tile == FLOOR)
+		game->content.count_f++;
 }
 
 void	check_param(t_game *game)
@@ -88,9 +90,11 @@ void	check_param(t_game *game)
 void	ft_verify_param(t_game *game)
 {
 	if (game->content.count_c == 0)
-		ft_error(game, "invalid map no coins\n");
+		ft_error(game, "invalid map no coins");
 	else if (game->content.count_e != 1)
-		ft_error(game, "invalid exit number\n");
+		ft_error(game, "invalid exit number");
 	else if (game->content.count_p != 1)
-		ft_error(game, "invalid map invalid player number\n");
+		ft_error(game, "invalid map invalid player number");
+	else if (game->content.count_f < 1)
+		ft_error(game, "invalid number of floor tiles");
 }
