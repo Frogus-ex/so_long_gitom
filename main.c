@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:03:28 by tlorette          #+#    #+#             */
-/*   Updated: 2025/07/08 18:33:11 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/07/09 14:44:57 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,33 +17,15 @@
 
 int	main(int ac, char **av)
 {
-	int		screen_width;
-	int		screen_height;
 	t_img	img;
 	t_game	*game;
 
-	game = ft_calloc(1, sizeof(t_game));
-	if (!game)
-		cleanup(game);
-	img.game = game;
-	game->img = &img;
-	game->player.moves = 0;
+	game_init(&game, &img);
 	check_arg_param(ac, av, game);
 	read_map(game, av[1]);
-	flood_fill(game);
 	ft_check_map(game);
-	img.width = TILE_SIZE * game->width;
-	img.height = TILE_SIZE * game->height;
-	game->mlx = mlx_init();
-	if (!game->mlx)
-		ft_error(game, "mlx_init failed");
-	mlx_get_screen_size(game->mlx, &screen_width, &screen_height);
-	if (img.width > screen_width || img.height > screen_height)
-		ft_error(game, "map trop grande");
-	game->win = mlx_new_window(game->mlx, img.width, img.height, WND_NAME);
-	img.img = mlx_new_image(game->mlx, img.width, img.height);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-			&img.endian);
+	flood_fill(game);
+	init_mlx(game, &img);
 	draw_map(&img);
 	mlx_put_image_to_window(game->mlx, game->win, img.img, 0, 0);
 	mlx_key_hook(game->win, key_press, game);

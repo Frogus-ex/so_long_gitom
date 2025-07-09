@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 10:38:08 by tlorette          #+#    #+#             */
-/*   Updated: 2025/07/08 18:33:43 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/07/09 14:31:52 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,10 @@ typedef struct s_game{
 	int				fd;
 	int				width;
 	int				height;
+	int				ignore_exit;
 	int				player_sprite;
 	char			**map;
+	char			**tmp_map;
 	t_player		player;
 	t_cnt			content;
 	struct s_img	*img;
@@ -89,6 +91,8 @@ typedef struct s_img {
 	int		endian;
 	int		width;
 	int		height;
+	int		screen_width;
+	int		screen_height;
 	t_game	*game;
 }				t_img;
 
@@ -114,5 +118,7 @@ void	player_moves(t_img *img, int new_y, int new_x);
 int		player_input(int keycode, t_img *img);
 void	free_map(char **map);
 void	flood_fill(t_game *game);
+void	game_init(t_game **game, t_img *img);
+void	init_mlx(t_game *game, t_img *img);
 
 #endif

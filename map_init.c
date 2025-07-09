@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 13:22:37 by tlorette          #+#    #+#             */
-/*   Updated: 2025/07/08 16:18:17 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/07/09 14:48:33 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ static int	fill_map(t_game *game, char *av)
 int	read_map(t_game *game, char *av)
 {
 	if (count_lines(game, av))
-		return (1);
+		return (ft_error(game, "Fonction read_map invalide"), 1);
 	if (fill_map(game, av))
 		return (1);
 	return (0);

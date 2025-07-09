@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 18:00:06 by tlorette          #+#    #+#             */
-/*   Updated: 2025/07/07 14:36:56 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/07/09 14:34:21 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,32 @@ char	*ft_strrchr(const char *s, int c)
 		i--;
 	}
 	return (NULL);
+}
+
+void	game_init(t_game **game, t_img *img)
+{
+	*game = ft_calloc(1, sizeof(t_game));
+	if (!*game)
+		cleanup(NULL);
+	img->game = *game;
+	(*game)->img = img;
+	(*game)->player.moves = 0;
+	(*game)->img->screen_width = 0;
+	(*game)->img->screen_height = 0;
+}
+
+void	init_mlx(t_game *game, t_img *img)
+{
+	img->width = TILE_SIZE * game->width;
+	img->height = TILE_SIZE * game->height;
+	game->mlx = mlx_init();
+	if (!game->mlx)
+		ft_error(game, "mlx_init failed");
+	mlx_get_screen_size(game->mlx, &img->screen_width, &img->screen_height);
+	if (img->width > img->screen_width || img->height > img->screen_height)
+		ft_error(game, "map trop grande");
+	game->win = mlx_new_window(game->mlx, img->width, img->height, WND_NAME);
+	img->img = mlx_new_image(game->mlx, img->width, img->height);
+	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
+			&img->line_length, &img->endian);
 }
