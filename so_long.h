@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 10:38:08 by tlorette          #+#    #+#             */
-/*   Updated: 2025/07/09 14:31:52 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/07/09 17:57:14 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ typedef struct s_game{
 	int				width;
 	int				height;
 	int				ignore_exit;
-	int				player_sprite;
 	char			**map;
 	char			**tmp_map;
 	t_player		player;
@@ -93,14 +92,17 @@ typedef struct s_img {
 	int		height;
 	int		screen_width;
 	int		screen_height;
+	void	*wall;
+	void	*exit;
+	void	*player;
+	void	*floor;
+	void	*collect;
 	t_game	*game;
 }				t_img;
 
 int		cleanup(t_game *game);
 void	ft_victory(t_img *img);
 void	ft_error(t_game *game, char *str);
-void	draw_background(t_img *img, int width, int height);
-void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
 int		key_press(int keycode, t_game *game);
 int		cross_close(t_game *game);
 void	ft_check_map(t_game *game);
@@ -112,7 +114,6 @@ int		ft_gnlen(char	*gnl);
 int		read_map(t_game *game, char *av);
 char	*ft_strnstr(const char *big, const char *little, size_t len);
 char	*ft_strrchr(const char *s, int c);
-void	draw_tiles(t_img *img, int x, int y, int color);
 void	draw_map(t_img *img);
 void	player_moves(t_img *img, int new_y, int new_x);
 int		player_input(int keycode, t_img *img);
@@ -120,5 +121,7 @@ void	free_map(char **map);
 void	flood_fill(t_game *game);
 void	game_init(t_game **game, t_img *img);
 void	init_mlx(t_game *game, t_img *img);
+void	load_texture(t_game *game, t_img *img);
+void	free_textures(t_game *game, t_img *img);
 
 #endif

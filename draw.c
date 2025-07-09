@@ -6,52 +6,58 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 11:02:02 by tlorette          #+#    #+#             */
-/*   Updated: 2025/07/08 14:33:23 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/07/09 18:15:54 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
+void	load_texture(t_game *game, t_img *img)
 {
-	char	*dst;
+	int	width;
+	int	height;
 
-	dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
-}
-
-void	draw_tiles(t_img *img, int x, int y, int color)
-{
-	int	px;
-	int	py;
-
-	py = 0;
-	while (py < TILE_SIZE)
-	{
-		px = 0;
-		{
-			while (px < TILE_SIZE)
-			{
-				my_mlx_pixel_put(img, x + px, y + py, color);
-				px++;
-			}
-			py++;
-		}
-	}
+	width = TILE_SIZE;
+	height = TILE_SIZE;
+	img->wall = mlx_xpm_file_to_image(game->mlx,
+			"xpms/wall.xpm", &width, &height);
+	if (!img->wall)
+		ft_error(game, "impossible de dessiner les murs");
+	img->floor = mlx_xpm_file_to_image(game->mlx,
+			"xpms/floor.xpm", &width, &height);
+	if (!img->floor)
+		ft_error(game, "impossible de dessiner le sol");
+	img->player = mlx_xpm_file_to_image(game->mlx,
+			"xpms/player.xpm", &width, &height);
+	if (!img->player)
+		ft_error(game, "impossible de dessiner le joueur");
+	img->collect = mlx_xpm_file_to_image(game->mlx,
+			"xpms/collect.xpm", &width, &height);
+	if (!img->collect)
+		ft_error(game, "impossible de dessiner les collectibles");
+	img->exit = mlx_xpm_file_to_image(game->mlx,
+			"xpms/exit.xpm", &width, &height);
+	if (!img->exit)
+		ft_error(game, "impossible de dessiner la sortie");
 }
 
 void	if_draw(t_img *img, int y, int x)
 {
 	if (img->game->map[y][x] == WALL)
-		draw_tiles(img, x * TILE_SIZE, y * TILE_SIZE, 0x0033FFFF);
+		mlx_put_image_to_window(img->game->mlx, img->game->win, img->wall,
+			x * TILE_SIZE, y * TILE_SIZE);
 	else if (img->game->map[y][x] == PLAYER)
-		draw_tiles(img, x * TILE_SIZE, y * TILE_SIZE, 0x00FFFFFF);
+		mlx_put_image_to_window(img->game->mlx, img->game->win, img->player,
+			x * TILE_SIZE, y * TILE_SIZE);
 	else if (img->game->map[y][x] == EXIT)
-		draw_tiles(img, x * TILE_SIZE, y * TILE_SIZE, 0x0000FF00);
+		mlx_put_image_to_window(img->game->mlx, img->game->win, img->exit,
+			x * TILE_SIZE, y * TILE_SIZE);
 	else if (img->game->map[y][x] == COLLECT)
-		draw_tiles(img, x * TILE_SIZE, y * TILE_SIZE, 0x00FFD700);
+		mlx_put_image_to_window(img->game->mlx, img->game->win, img->collect,
+			x * TILE_SIZE, y * TILE_SIZE);
 	else if (img->game->map[y][x] == FLOOR)
-		draw_tiles(img, x * TILE_SIZE, y * TILE_SIZE, 0x00FF0000);
+		mlx_put_image_to_window(img->game->mlx, img->game->win, img->floor,
+			x * TILE_SIZE, y * TILE_SIZE);
 }
 
 void	draw_map(t_img *img)

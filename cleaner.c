@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 18:08:36 by tlorette          #+#    #+#             */
-/*   Updated: 2025/07/08 18:40:49 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/07/09 17:19:21 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	cleanup(t_game *game)
 		exit(EXIT_FAILURE);
 	if (game->map)
 		free_map(game->map);
+	if (game->img)
+		free_textures(game, game->img);
 	if (game->img && game->mlx && game->img->img)
 		mlx_destroy_image(game->mlx, game->img->img);
 	if (game->win)

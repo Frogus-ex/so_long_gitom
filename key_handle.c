@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 12:21:09 by tlorette          #+#    #+#             */
-/*   Updated: 2025/07/02 18:42:11 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/07/09 17:24:35 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,5 @@ void	player_moves(t_img *img, int new_y, int new_x)
 		img->game->player.moves++;
 		ft_printf("%d\n", img->game->player.moves);
 		draw_map(img);
-		mlx_put_image_to_window(img->game->mlx, img->game->win, img->img, 0, 0);
 	}
 }

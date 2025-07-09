@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 18:00:06 by tlorette          #+#    #+#             */
-/*   Updated: 2025/07/09 14:34:21 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/07/09 17:17:30 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	init_mlx(t_game *game, t_img *img)
 	game->mlx = mlx_init();
 	if (!game->mlx)
 		ft_error(game, "mlx_init failed");
+	load_texture(game, img);
 	mlx_get_screen_size(game->mlx, &img->screen_width, &img->screen_height);
 	if (img->width > img->screen_width || img->height > img->screen_height)
 		ft_error(game, "map trop grande");
@@ -79,3 +80,18 @@ void	init_mlx(t_game *game, t_img *img)
 	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
 			&img->line_length, &img->endian);
 }
+
+void	free_textures(t_game *game, t_img *img)
+{
+	if (img->wall)
+		mlx_destroy_image(game->mlx, img->wall);
+	if (img->floor)
+		mlx_destroy_image(game->mlx, img->floor);
+	if (img->player)
+		mlx_destroy_image(game->mlx, img->player);
+	if (img->collect)
+		mlx_destroy_image(game->mlx, img->collect);
+	if (img->exit)
+		mlx_destroy_image(game->mlx, img->exit);
+}
+
