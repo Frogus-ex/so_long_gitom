@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 14:12:56 by tlorette          #+#    #+#             */
-/*   Updated: 2025/07/09 14:59:09 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/07/11 12:59:59 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,18 @@ void	map_check(t_game *game)
 	while (y < game->height)
 	{
 		if (game->map[y][0] != WALL)
-			ft_error(game, "map invalide car pas close");
+			ft_error(game, "map invalide car pas ferme");
 		if (game->map[y][game->width - 1] != WALL)
-			ft_error(game, "map invalide car pas close");
+			ft_error(game, "map invalide car pas ferme");
 		y++;
 	}
 	x = 0;
 	while (x < game->width)
 	{
 		if (game->map[0][x] != WALL)
-			ft_error(game, "map invalide car pas close");
+			ft_error(game, "map invalide car pas ferme");
 		if (game->map[game->height - 1][x] != WALL)
-			ft_error(game, "map invalide car pas close");
+			ft_error(game, "map invalide car pas ferme");
 		x++;
 	}
 }
@@ -54,7 +54,7 @@ void	map_check(t_game *game)
 static void	check_tile(t_game *game, char tile, int x, int y)
 {
 	if (!ft_strchr("CEP10", tile))
-		ft_error(game, "invalid map params");
+		ft_error(game, "parametres de la map invalide");
 	else if (tile == PLAYER)
 	{
 		game->content.count_p++;
@@ -90,11 +90,11 @@ void	check_param(t_game *game)
 void	ft_verify_param(t_game *game)
 {
 	if (game->content.count_c == 0)
-		ft_error(game, "invalid map no coins");
+		ft_error(game, "map invalide car pas de collectibles");
 	else if (game->content.count_e != 1)
-		ft_error(game, "invalid exit number");
+		ft_error(game, "map invalide car pas le bon nombre de sorties");
 	else if (game->content.count_p != 1)
-		ft_error(game, "invalid map invalid player number");
+		ft_error(game, "map invalide car pas le bon nombre de joueurs");
 	else if (game->content.count_f < 1)
-		ft_error(game, "invalid number of floor tiles");
+		ft_error(game, "map invalide car pas de floor tiles");
 }

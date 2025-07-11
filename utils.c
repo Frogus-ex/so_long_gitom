@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 18:00:06 by tlorette          #+#    #+#             */
-/*   Updated: 2025/07/09 17:17:30 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/07/11 13:00:15 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,19 @@ void	game_init(t_game **game, t_img *img)
 	if (!*game)
 		cleanup(NULL);
 	img->game = *game;
+	img->img = NULL;
+	img->addr = NULL;
+	img->wall = NULL;
+	img->floor = NULL;
+	img->player = NULL;
+	img->collect = NULL;
+	img->exit = NULL;
+	img->width = 0;
+	img->height = 0;
+	img->screen_width = 0;
+	img->screen_height = 0;
 	(*game)->img = img;
 	(*game)->player.moves = 0;
-	(*game)->img->screen_width = 0;
-	(*game)->img->screen_height = 0;
 }
 
 void	init_mlx(t_game *game, t_img *img)
@@ -70,7 +79,7 @@ void	init_mlx(t_game *game, t_img *img)
 	img->height = TILE_SIZE * game->height;
 	game->mlx = mlx_init();
 	if (!game->mlx)
-		ft_error(game, "mlx_init failed");
+		ft_error(game, "mlx_init echoue");
 	load_texture(game, img);
 	mlx_get_screen_size(game->mlx, &img->screen_width, &img->screen_height);
 	if (img->width > img->screen_width || img->height > img->screen_height)
@@ -94,4 +103,3 @@ void	free_textures(t_game *game, t_img *img)
 	if (img->exit)
 		mlx_destroy_image(game->mlx, img->exit);
 }
-

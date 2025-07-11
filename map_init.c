@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 13:22:37 by tlorette          #+#    #+#             */
-/*   Updated: 2025/07/09 14:53:51 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/07/11 12:57:10 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@ void	check_arg_param(int ac, char **av, t_game *game)
 	char	*name;
 
 	if (ac > 2)
-		ft_error(game, "Too many arguments");
+		ft_error(game, "Trop d argument");
 	if (ac < 2)
-		ft_error(game, "Missing map argument");
+		ft_error(game, "manque argument map");
 	name = av[1];
 	len = ft_strlen(name);
 	if (len < 5 || ft_strncmp(name + len - 4, ".ber", 4) != 0)
-		ft_error(game, "Map file extension must be .ber");
+		ft_error(game, "extention du fichier map doit etre .ber");
 	if (ft_strnstr(name, ".ber", len - 4))
-		ft_error(game, "Map filename must not contain multiple .ber");
+		ft_error(game, "le fichier map ne doit pas contenir plusieurs .ber");
 }
 
 int	ft_gnlen(char *gnl)
@@ -61,7 +61,7 @@ static int	count_lines(t_game *game, char *av)
 		{
 			free(game->line);
 			free(stash);
-			ft_error(game, "la map n est pas rectangualaire");
+			ft_error(game, "la map n est pas rectangulaire");
 		}
 		game->height++;
 		free(game->line);

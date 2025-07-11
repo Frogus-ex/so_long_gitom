@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 17:42:56 by tlorette          #+#    #+#             */
-/*   Updated: 2025/07/09 13:38:43 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/07/11 11:33:20 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	fill(t_game *game, char **tmp_map, int y, int x)
 		return ;
 	if (tmp_map[y][x] == 'E' && game->ignore_exit == 1)
 		return ;
-	if (tmp_map[y][x] == 'C' || tmp_map[y][x] == '0' || tmp_map[y][x] == 'P' 
+	if (tmp_map[y][x] == 'C' || tmp_map[y][x] == '0' || tmp_map[y][x] == 'P'
 		|| tmp_map[y][x] == 'E')
 		tmp_map[y][x] = 'V';
 	else
