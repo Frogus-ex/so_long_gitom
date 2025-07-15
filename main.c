@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:03:28 by tlorette          #+#    #+#             */
-/*   Updated: 2025/07/09 17:21:40 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/07/11 14:48:36 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	main(int ac, char **av)
 	flood_fill(game);
 	init_mlx(game, &img);
 	draw_map(&img);
+	draw_moves(game);
 	mlx_key_hook(game->win, key_press, game);
 	mlx_hook(game->win, 2, 1L << 0, player_input, &img);
 	mlx_hook(game->win, 17, 0, cross_close, game);

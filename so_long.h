@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 10:38:08 by tlorette          #+#    #+#             */
-/*   Updated: 2025/07/09 17:57:14 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/07/11 14:49:52 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@
 # define EXIT 'E'
 
 typedef struct s_player {
-	int	y;
-	int	x;
-	int	moves;
+	int		y;
+	int		x;
+	int		moves;
 }				t_player;
 
 typedef struct s_cnt {
@@ -123,5 +123,6 @@ void	game_init(t_game **game, t_img *img);
 void	init_mlx(t_game *game, t_img *img);
 void	load_texture(t_game *game, t_img *img);
 void	free_textures(t_game *game, t_img *img);
+void	draw_moves(t_game *game);
 
 #endif

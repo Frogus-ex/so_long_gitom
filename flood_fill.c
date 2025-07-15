@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 17:42:56 by tlorette          #+#    #+#             */
-/*   Updated: 2025/07/11 11:33:20 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/07/15 10:51:46 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,18 @@
 void	copy_map(t_game *game)
 {
 	int	y;
+	int	i;
 
 	y = 0;
+	i = 0;
 	game->tmp_map = malloc(sizeof(char *) * (game->height + 1));
 	if (!game->tmp_map)
 		return (ft_error(game, "erreur malloc tmp_map"));
+	while (i <= game->height)
+	{
+		game->tmp_map[i] = NULL;
+		i++;
+	}
 	while (y < game->height)
 	{
 		game->tmp_map[y] = ft_strdup(game->map[y]);

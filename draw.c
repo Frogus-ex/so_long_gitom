@@ -6,7 +6,7 @@
 /*   By: tlorette <tlorette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 11:02:02 by tlorette          #+#    #+#             */
-/*   Updated: 2025/07/09 18:15:54 by tlorette         ###   ########.fr       */
+/*   Updated: 2025/07/15 10:23:49 by tlorette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,17 @@ void	if_draw(t_img *img, int y, int x)
 			x * TILE_SIZE, y * TILE_SIZE);
 }
 
+void	draw_moves(t_game *game)
+{
+	char	*move_str;
+
+	move_str = ft_itoa(game->player.moves);
+	if (!move_str)
+		ft_error(game, "ft_itoa a echoue");
+	mlx_string_put(game->mlx, game->win, 10, 10, 0xCCFFFF, move_str);
+	free(move_str);
+}
+
 void	draw_map(t_img *img)
 {
 	int		x;
@@ -80,4 +91,5 @@ void	draw_map(t_img *img)
 	}
 	if (y == x)
 		ft_error(img->game, "Map carre !!");
+	draw_moves(img->game);
 }
